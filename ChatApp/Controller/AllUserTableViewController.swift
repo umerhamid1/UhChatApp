@@ -24,6 +24,12 @@ class AllUserTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        fs.getCurrentUserDetail { (uid, imageURL, name) in
+                  self.senderUserID = uid
+                  self.senderImageURL = imageURL
+                  self.senderUserName = name
+              }
+        
         self.view.makeToastActivity(.center)
         
 //
@@ -78,13 +84,17 @@ class AllUserTableViewController: UITableViewController {
     }
     var conversationID = ""
     var senderUserID = ""
+    var senderImageURL = ""
+    var senderUserName = ""
+    var receiverOnlineStatus = false
+    let fs = FireStoreQueries()
     //var sendImageURL  = NSString
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         receiverUserID = arr[indexPath.row].UserID
         receiverImageURL = arr[indexPath.row].ImageURL!
         receiverUserName = arr[indexPath.row].Name
-        
+        receiverOnlineStatus = arr[indexPath.row].ISOnline
         let user = Auth.auth().currentUser
                        if let user = user {
                        
@@ -105,6 +115,8 @@ class AllUserTableViewController: UITableViewController {
                            print(conversationID)
                         
                        }
+        
+      
         performSegue(withIdentifier: "allUserToChat", sender: self)
     }
     
@@ -120,6 +132,9 @@ class AllUserTableViewController: UITableViewController {
             chatVC.receiverName = self.receiverUserName
             chatVC.receiverImageURL = self.receiverImageURL
             chatVC.senderUserID = self.senderUserID
+            chatVC.senderImageURL = self.senderImageURL
+            chatVC.senderUserName = self.senderUserName
+            chatVC.receiverOnlineStatus = self.receiverOnlineStatus
         }
     }
     

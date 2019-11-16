@@ -26,7 +26,8 @@ class receiverImageTableViewCell: UITableViewCell {
         let m = GeneralFunction()
         
 
-         m.sendingImage(imageView: receiverSenderImageView)
+        receiverSenderImageView.makeRoundCorners(byRadius: 20)
+         //m.sendingImage(imageView: receiverSenderImageView)
          m.profileImage(image: avatarImageView)
         // Initialization code
     }

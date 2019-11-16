@@ -20,5 +20,7 @@ target 'ChatApp' do
   
   pod 'YPImagePicker'
   pod 'GrowingTextView', '0.7.1'
+  
+  pod 'MPAudioRecorder'
    
 end

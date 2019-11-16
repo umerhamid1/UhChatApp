@@ -13,6 +13,8 @@ import FirebaseFirestore
 import Toast_Swift
 //import CodableFirebase
 
+var emailG = ""
+
 class FireStoreQueries : UIViewController{
     
     var general = AppDelegate()
@@ -24,8 +26,141 @@ class FireStoreQueries : UIViewController{
     var  db = Firestore.firestore()
     var ref: DocumentReference?
     
+    let uid = Auth.auth().currentUser?.uid
+    
+    func sendAudio( sid:String, rid:String,  _message:String, duration:String, completion: @escaping (_ response: String?) -> ()){
+        let formattedDate = String(Date().timeIntervalSince1970)
+        var chatId = String()
+        if sid > rid{
+            chatId = sid + rid
+        }else{
+            chatId = rid + sid
+        }
+        self.uploadAudio(audioPath: _message, completion: {(error,url) in
+            var ref:DocumentReference?
+            if let err = error{
+                completion(err)
+            }else if let Url = url{
+                ref = self.db.collection("Messages").addDocument(data:
+                    [
+                       
+                                      "ConversationID" : chatId,
+                                      "FriendID" : rid,
+                                       "MsgType" : "audio",
+                                       "Uid" : sid,
+                                       "Date" : Date(),
+                                        "msgBody" : Url.absoluteString,
+                        "duration" : duration
+
+
+                    ]
+                    
+                   // ["sid":sid,"rid":rid,"sName":sName, "rName":rName,"sDel":"false", "rDel":"false", "duration":duration,"message":Url.absoluteString,"type":"audio","date":formattedDate,"chatId":chatId]
+                    
+                    , completion: {(error) in
+                    if let err = error{
+                        completion(err.localizedDescription)
+                    }else{
+                        completion("ok")
+//                        if let err = error{
+//                            completion(err.localizedDescription)
+//                        }
+                      //  else {
+//                            self.addToChat(formattedDate: formattedDate, chatId: chatId, sid: sid, rid: rid, sName: sName, rName: rName, message: Url.absoluteString, type: "audio", duration: duration, completion: {(error) in
+//                                if let err = error{
+//                                    completion(err,nil)
+//                                }else{
+//                                    let msg = message(date: formattedDate, message: Url.absoluteString, rDel: "false", rid: rid, rName: rName, sDel: "false", sid: sid, sName: sName, type: "audio", messageId: ref!.documentID, chatId: chatId, duration: duration)
+//                                    completion(nil, msg)
+//                                }
+//                            })
+                        //}
+                    }
+                })
+            }
+        })
+    }
+    
+    
+    func uploadAudio(audioPath:String?, completion: @escaping (_ error: String?,_ url:URL?) -> ()){
+         if staticLinker.uploadProgress != nil{
+             staticLinker.uploadProgress.removeAllObservers()
+         }
+         let audioUpload = Storage.storage().reference().child("audio/\(UUID())\(uid!)")
+         staticLinker.uploadProgress = audioUpload.putFile(from: URL(string: audioPath!)!, metadata: nil, completion: { (metadata, error) in
+             if let err = error {
+                 completion(err.localizedDescription,nil)
+             }else{
+                 audioUpload.downloadURL(completion: { (url, error) in
+                     if let err = error {
+                         completion(err.localizedDescription,nil)
+                     }else{
+                         completion(nil,url)
+                     }
+                 })
+             }
+         })
+     }
+    
+    func getFriendsIDs(email : String){
+        var arrFriendID : Array = [String]()
+        
+       db.collection("User").whereField("Email", isEqualTo: email)
+       .addSnapshotListener { querySnapshot, error in
+           guard let snapshot = querySnapshot else {
+               print("Error fetching snapshots: \(error!)")
+               return
+           }
+           snapshot.documentChanges.forEach { diff in
+            //   if (diff.type == .added) {
+                   print("New city: \(diff.document.data())")
+                let data = diff.document.data()
+                var arr = data["ConversationID"] as! Array<String>
+                print("here is conversation ID : \(arr)")
+                
+            //   }
+            
+           }
+        
+       }
+       
+       
+       }
     
     let dg = DispatchGroup()
+    
+    
+    
+    
+    func getCurrentUserDetail(completion : @escaping(_ UserID : String , _ imageURL : String ,_ currentUserName : String)->Void){
+        let userID = Auth.auth().currentUser?.uid
+        
+       
+       // let docRef = db.collection("User").document(userID!)
+
+        db.collection("User").whereField("Email", isEqualTo: emailG)
+            .getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        let uid = userID
+                        let data = document.data()
+                        let imageURL = data["ImageURL"] as! String
+                        let name = data["Name"] as! String
+                       
+                        print(imageURL)
+                        //print("\(document.documentID) => \(document.data())")
+                        print("data is excuted")
+                        completion(uid! , imageURL , name)
+                       
+                    }
+                    
+                }
+        }
+
+    }
+    
     
     func check(t : String = "" , ok : Int)  {
         print()

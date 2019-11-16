@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="XMi-hf-68Y">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
@@ -15,24 +15,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aME-JD-WaQ">
-                                <rect key="frame" x="122" y="424" width="132" height="49"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZEZ-bQ-Ea5">
+                                <rect key="frame" x="108" y="108" width="36" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <state key="normal" title="fdsg">
+                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="audioDidPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OLg-FH-z4L"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6fj-hs-cqw">
+                                <rect key="frame" x="111" y="172" width="31" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="stop"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="lbl" destination="aME-JD-WaQ" id="uuS-eK-DE1"/>
+                        <outlet property="recordButton" destination="ZEZ-bQ-Ea5" id="e2d-2F-i0U"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-648" y="52"/>
+            <point key="canvasLocation" x="-648.79999999999995" y="51.724137931034484"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tP5-my-sex">
@@ -243,7 +251,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="friendListTableView1" destination="3yu-DU-dnV" id="T9g-P5-RqN"/>
                         <segue destination="WGt-0L-pdj" kind="show" identifier="friendToAllUser" id="6vd-9X-YPB"/>
+                        <segue destination="LLO-JA-WfT" kind="show" identifier="goFriendToChat" id="NJ6-KT-CRb"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jZc-kX-vhB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -513,6 +523,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nVm-jC-UCA" userLabel="mic">
                                         <rect key="frame" x="32" y="11.5" width="30" height="29.5"/>
                                         <state key="normal" backgroundImage="mic.circle.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="audioDidPress:" destination="LLO-JA-WfT" eventType="touchUpInside" id="8EN-9Z-MoC"/>
+                                        </connections>
                                     </button>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9Qm-71-i9B">
                                         <rect key="frame" x="70" y="9.5" width="243" height="31"/>
@@ -583,12 +596,13 @@
                     <connections>
                         <outlet property="messageTableView" destination="4r4-hY-mcM" id="GJE-pB-OVv"/>
                         <outlet property="messageTextfield" destination="9Qm-71-i9B" id="Yqs-i9-EA3"/>
+                        <outlet property="recordButton" destination="nVm-jC-UCA" id="fTu-7p-2NV"/>
                         <outlet property="sendButton" destination="ujf-fl-cS2" id="alT-CB-2dt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tkw-h2-2Ko" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="788" y="2383.3583208395803"/>
+            <point key="canvasLocation" x="-649" y="3161"/>
         </scene>
     </scenes>
     <resources>
@@ -598,6 +612,7 @@
         <image name="nightStarsWallpaper" width="320" height="568"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="NJ6-KT-CRb"/>
         <segue reference="Lpg-zp-9ys"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -25,6 +25,7 @@ class imageTableViewCell: UITableViewCell {
         
         let m  = GeneralFunction()
         
+        senderImageView.makeRoundCorners(byRadius: 10)
         m.sendingImage(imageView: senderImageView)
         m.profileImage(image: avatarImageView)
  
@@ -42,4 +43,34 @@ class imageTableViewCell: UITableViewCell {
 }
 
 
+extension UIImageView {
+   func makeRoundCorners(byRadius rad: CGFloat) {
+      self.layer.cornerRadius = rad
+      self.clipsToBounds = true
+   }
+}
 
+
+
+@IBDesignable
+class RoundUIView: UIView {
+
+    @IBInspectable var borderColor: UIColor = UIColor.white {
+        didSet {
+            self.layer.borderColor = borderColor.cgColor
+        }
+    }
+
+    @IBInspectable var borderWidth: CGFloat = 2.0 {
+        didSet {
+            self.layer.borderWidth = borderWidth
+        }
+    }
+
+    @IBInspectable var cornerRadius: CGFloat = 0.0 {
+        didSet {
+            self.layer.cornerRadius = cornerRadius
+        }
+    }
+
+}

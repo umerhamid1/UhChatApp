@@ -32,14 +32,14 @@ class LoginViewController: UIViewController {
         db = Firestore.firestore()
     }
     
-    
+    var arrFriendID = [String]()
     @IBAction func loginButtonPressed(_ sender: Any) {
         
    
         
-        
+       // self.getFriendsIDs()
         self.view.makeToastActivity(.center)
-        
+
         l.login(email: emailTextField.text!, password: passwordTextField.text!, controller: self) { (response , userID) in
 
             self.view.hideToastActivity()
@@ -47,11 +47,11 @@ class LoginViewController: UIViewController {
             self.performSegue(withIdentifier: "loginToChat", sender: self)
             //self.general.showMessage(title: "Result", msg: response, on: self)
 
-            
-            
+            emailG = self.emailTextField.text!
+
             //print("here is login \(userID)")
-            
-            print("\(self.currentUserID)")
+
+           // print("\(self.currentUserID)")
 
         }
     }
@@ -61,12 +61,14 @@ class LoginViewController: UIViewController {
         if segue.identifier == "loginToChat" {
             let friendVC = segue.destination as! FriendsTableViewController
             friendVC.currentUserID = self.currentUserID
+           // friendVC.arrFriendIDs = self.arrFriendID
 
 
         }
     }
     
-    
+
+  
 
 
 
