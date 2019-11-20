@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="XMi-hf-68Y">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
@@ -41,6 +41,38 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-648.79999999999995" y="51.724137931034484"/>
+        </scene>
+        <!--Testing Table View Controller-->
+        <scene sceneID="8PZ-gl-5gf">
+            <objects>
+                <tableViewController id="bx3-Q4-Sdj" customClass="TestingTableViewController" customModule="ChatApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="7dF-qs-QPL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="59" id="t5U-GX-DNW">
+                                <rect key="frame" x="0.0" y="28" width="375" height="59"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="t5U-GX-DNW" id="etc-pv-QmD">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                                <rect key="contentStretch" x="0.0" y="0.0" width="1" height="0.0"/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="bx3-Q4-Sdj" id="qJH-i3-ixb"/>
+                            <outlet property="delegate" destination="bx3-Q4-Sdj" id="K4h-Pd-4ti"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="testingTableView" destination="7dF-qs-QPL" id="Pcm-MK-Wj8"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VLR-9P-8jB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="28" y="40.929535232383813"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tP5-my-sex">
@@ -520,9 +552,9 @@
                                             <action selector="cameraButtonPressed:" destination="LLO-JA-WfT" eventType="touchUpInside" id="ipF-Nd-jhu"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nVm-jC-UCA" userLabel="mic">
-                                        <rect key="frame" x="32" y="11.5" width="30" height="29.5"/>
-                                        <state key="normal" backgroundImage="mic.circle.fill" catalog="system"/>
+                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nVm-jC-UCA" userLabel="mic">
+                                        <rect key="frame" x="32" y="11" width="30" height="30"/>
+                                        <state key="normal" image="mic111"/>
                                         <connections>
                                             <action selector="audioDidPress:" destination="LLO-JA-WfT" eventType="touchUpInside" id="8EN-9Z-MoC"/>
                                         </connections>
@@ -594,25 +626,27 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="containerView" destination="s50-WM-spH" id="7HX-iL-i8u"/>
                         <outlet property="messageTableView" destination="4r4-hY-mcM" id="GJE-pB-OVv"/>
-                        <outlet property="messageTextfield" destination="9Qm-71-i9B" id="Yqs-i9-EA3"/>
+                        <outlet property="messageTextfield" destination="9Qm-71-i9B" id="tNZ-cc-jef"/>
                         <outlet property="recordButton" destination="nVm-jC-UCA" id="fTu-7p-2NV"/>
                         <outlet property="sendButton" destination="ujf-fl-cS2" id="alT-CB-2dt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tkw-h2-2Ko" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-649" y="3161"/>
+            <point key="canvasLocation" x="-650.39999999999998" y="3160.5697151424292"/>
         </scene>
     </scenes>
     <resources>
         <image name="background" width="1200" height="795"/>
         <image name="camera.circle" catalog="system" width="64" height="62"/>
         <image name="mic.circle.fill" catalog="system" width="64" height="62"/>
+        <image name="mic111" width="980" height="980"/>
         <image name="nightStarsWallpaper" width="320" height="568"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="NJ6-KT-CRb"/>
-        <segue reference="Lpg-zp-9ys"/>
+        <segue reference="TXt-cV-dJ3"/>
     </inferredMetricsTieBreakers>
 </document>

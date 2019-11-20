@@ -134,6 +134,7 @@ PODS:
     - SDWebImage/Core (= 5.2.5)
   - SDWebImage/Core (5.2.5)
   - SteviaLayout (4.6.1)
+  - SwiftySound (1.1.0)
   - Toast-Swift (5.0.0)
   - YPImagePicker (4.1.2):
     - PryntTrimmerView (~> 4.0.0)
@@ -150,6 +151,7 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - MPAudioRecorder
   - SDWebImage
+  - SwiftySound
   - Toast-Swift
   - YPImagePicker
 
@@ -183,6 +185,7 @@ SPEC REPOS:
     - PryntTrimmerView
     - SDWebImage
     - SteviaLayout
+    - SwiftySound
     - Toast-Swift
     - YPImagePicker
 
@@ -215,9 +218,10 @@ SPEC CHECKSUMS:
   PryntTrimmerView: 67e67573ffd4c073f1308effa66aefd0cfa667a0
   SDWebImage: 4eabf2fa6695c95c47724214417a9c036c965e4a
   SteviaLayout: 0c83442390c8a369c21f975ffbd812d11532645b
+  SwiftySound: eb46cc2399cf7d94f58c372f38216e15e0a6de3e
   Toast-Swift: 36f4720243c8582c2be243a60a51e193c761f541
   YPImagePicker: bdaa46782668e260fdd9709f19043a9f469fd2ad
 
-PODFILE CHECKSUM: 596a9dfc66fa0777cfd31269cab82e8d6f92aa09
+PODFILE CHECKSUM: c9646c12e688ff8e1b15a590db32969b70bf03d1
 
 COCOAPODS: 1.7.5

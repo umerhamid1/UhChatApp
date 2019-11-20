@@ -22,5 +22,7 @@ target 'ChatApp' do
   pod 'GrowingTextView', '0.7.1'
   
   pod 'MPAudioRecorder'
+  
+  pod 'SwiftySound'
    
 end

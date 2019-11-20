@@ -17,7 +17,7 @@ class Message {
     var messageBody = ""
     var sender = ""
     var receiver = ""
-    
+    var duration = ""
     
     
 }

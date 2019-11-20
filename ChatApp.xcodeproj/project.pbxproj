@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D0D24EF23829EF000AD312F /* TestingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0D24EE23829EF000AD312F /* TestingTableViewController.swift */; };
+		3D0D24F22382A81400AD312F /* AudioSenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0D24F02382A81400AD312F /* AudioSenderTableViewCell.swift */; };
+		3D0D24F32382A81400AD312F /* AudioSenderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D0D24F12382A81400AD312F /* AudioSenderTableViewCell.xib */; };
+		3D0D24F92382F95C00AD312F /* audioSendersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0D24F72382F95C00AD312F /* audioSendersTableViewCell.swift */; };
+		3D0D24FA2382F95C00AD312F /* audioSendersTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D0D24F82382F95C00AD312F /* audioSendersTableViewCell.xib */; };
 		3D5F4C7B23683BFC001948B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5F4C7A23683BFC001948B2 /* AppDelegate.swift */; };
 		3D5F4C7D23683BFC001948B2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5F4C7C23683BFC001948B2 /* SceneDelegate.swift */; };
 		3D5F4C7F23683BFC001948B2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5F4C7E23683BFC001948B2 /* ViewController.swift */; };
@@ -34,6 +39,7 @@
 		3D7CC40E236AF78200B7BF0E /* AudioTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D7CC40C236AF78200B7BF0E /* AudioTableViewCell.xib */; };
 		3D7CC410236B191E00B7BF0E /* playCell.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D7CC40F236B191D00B7BF0E /* playCell.png */; };
 		3D7CC412236B1B9A00B7BF0E /* pauseCell.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D7CC411236B1B9A00B7BF0E /* pauseCell.png */; };
+		3D7D9C1723843F8500B90EB9 /* textFieldDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7D9C1623843F8500B90EB9 /* textFieldDesign.swift */; };
 		3D8A958D23702107002D63BF /* RegistrationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8A958C23702107002D63BF /* RegistrationModel.swift */; };
 		3D8A958F23702662002D63BF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8A958E23702662002D63BF /* LoginViewController.swift */; };
 		3D8A959123703D24002D63BF /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8A959023703D24002D63BF /* LoginModel.swift */; };
@@ -56,6 +62,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D0D24EE23829EF000AD312F /* TestingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingTableViewController.swift; sourceTree = "<group>"; };
+		3D0D24F02382A81400AD312F /* AudioSenderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSenderTableViewCell.swift; sourceTree = "<group>"; };
+		3D0D24F12382A81400AD312F /* AudioSenderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioSenderTableViewCell.xib; sourceTree = "<group>"; };
+		3D0D24F72382F95C00AD312F /* audioSendersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = audioSendersTableViewCell.swift; sourceTree = "<group>"; };
+		3D0D24F82382F95C00AD312F /* audioSendersTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = audioSendersTableViewCell.xib; sourceTree = "<group>"; };
 		3D5F4C7723683BFC001948B2 /* ChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D5F4C7A23683BFC001948B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3D5F4C7C23683BFC001948B2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -85,6 +96,7 @@
 		3D7CC40C236AF78200B7BF0E /* AudioTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioTableViewCell.xib; sourceTree = "<group>"; };
 		3D7CC40F236B191D00B7BF0E /* playCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playCell.png; sourceTree = "<group>"; };
 		3D7CC411236B1B9A00B7BF0E /* pauseCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pauseCell.png; sourceTree = "<group>"; };
+		3D7D9C1623843F8500B90EB9 /* textFieldDesign.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = textFieldDesign.swift; sourceTree = "<group>"; };
 		3D8A958C23702107002D63BF /* RegistrationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationModel.swift; sourceTree = "<group>"; };
 		3D8A958E23702662002D63BF /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3D8A959023703D24002D63BF /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
@@ -126,6 +138,15 @@
 				ECD72303FA96837AF59CAFEC /* Pods_ChatApp.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3D0D24F42382F8E000AD312F /* audioCell */ = {
+			isa = PBXGroup;
+			children = (
+				3D0D24F72382F95C00AD312F /* audioSendersTableViewCell.swift */,
+				3D0D24F82382F95C00AD312F /* audioSendersTableViewCell.xib */,
+			);
+			path = audioCell;
 			sourceTree = "<group>";
 		};
 		3D5F4C6E23683BFC001948B2 = {
@@ -193,6 +214,7 @@
 				3D8A95982372C45A002D63BF /* FriendsTableViewController.swift */,
 				3D8A959C2372D1F2002D63BF /* AllUserTableViewController.swift */,
 				3D8A959E23730715002D63BF /* 123.jpg */,
+				3D0D24EE23829EF000AD312F /* TestingTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -216,6 +238,7 @@
 				3D5F4CAE236AC372001948B2 /* GeneralFunction.swift */,
 				3DC26BF9236C1D48001CA6B8 /* Validation.swift */,
 				3D8A959023703D24002D63BF /* LoginModel.swift */,
+				3D7D9C1623843F8500B90EB9 /* textFieldDesign.swift */,
 				3D8A958C23702107002D63BF /* RegistrationModel.swift */,
 				3D8A95942370798D002D63BF /* ResetPasswordModel.swift */,
 				3D8A959A2372C6BF002D63BF /* AllUserModel.swift */,
@@ -231,6 +254,7 @@
 		3D5F4CA523699D2D001948B2 /* senderCell */ = {
 			isa = PBXGroup;
 			children = (
+				3D0D24F42382F8E000AD312F /* audioCell */,
 				3D5F4CA92369B3BC001948B2 /* imageCell */,
 				3D5F4C9B236889A2001948B2 /* ReceiverTableViewCell.xib */,
 				3D5F4C9A236889A2001948B2 /* ReceiverTableViewCell.swift */,
@@ -291,6 +315,8 @@
 				3D7CC411236B1B9A00B7BF0E /* pauseCell.png */,
 				3D7CC40B236AF78200B7BF0E /* AudioTableViewCell.swift */,
 				3D7CC40C236AF78200B7BF0E /* AudioTableViewCell.xib */,
+				3D0D24F02382A81400AD312F /* AudioSenderTableViewCell.swift */,
+				3D0D24F12382A81400AD312F /* AudioSenderTableViewCell.xib */,
 			);
 			name = audioCell;
 			sourceTree = "<group>";
@@ -375,6 +401,7 @@
 				3D64AF3B237ABE7A00EDDBCC /* loading.png in Resources */,
 				3DC26BFC236C821C001CA6B8 /* GoogleService-Info.plist in Resources */,
 				3D5F4C9D236889A3001948B2 /* ReceiverTableViewCell.xib in Resources */,
+				3D0D24F32382A81400AD312F /* AudioSenderTableViewCell.xib in Resources */,
 				3D5F4C9523684292001948B2 /* senderTableViewCell.xib in Resources */,
 				3D7CC412236B1B9A00B7BF0E /* pauseCell.png in Resources */,
 				3D5F4CB4236AC431001948B2 /* receiverImageTableViewCell.xib in Resources */,
@@ -384,6 +411,7 @@
 				3D5F4C8423683BFD001948B2 /* Assets.xcassets in Resources */,
 				3D7CC410236B191E00B7BF0E /* playCell.png in Resources */,
 				3D5F4C8223683BFC001948B2 /* Main.storyboard in Resources */,
+				3D0D24FA2382F95C00AD312F /* audioSendersTableViewCell.xib in Resources */,
 				3D5F4CAD2369B3F8001948B2 /* imageTableViewCell.xib in Resources */,
 				3D7CC408236AE0A400B7BF0E /* FriendsTableViewCell.xib in Resources */,
 				3D8A959F23730715002D63BF /* 123.jpg in Resources */,
@@ -451,11 +479,14 @@
 				3D5F4C7B23683BFC001948B2 /* AppDelegate.swift in Sources */,
 				3D7CC40D236AF78200B7BF0E /* AudioTableViewCell.swift in Sources */,
 				3D64AF3D237B340B00EDDBCC /* FriendList.swift in Sources */,
+				3D0D24F92382F95C00AD312F /* audioSendersTableViewCell.swift in Sources */,
 				3D8A95952370798D002D63BF /* ResetPasswordModel.swift in Sources */,
 				3D8A959B2372C6BF002D63BF /* AllUserModel.swift in Sources */,
 				3D8A959D2372D1F2002D63BF /* AllUserTableViewController.swift in Sources */,
+				3D0D24F22382A81400AD312F /* AudioSenderTableViewCell.swift in Sources */,
 				3D5F4C7D23683BFC001948B2 /* SceneDelegate.swift in Sources */,
 				3D8A95932370777B002D63BF /* PasswordResetViewController.swift in Sources */,
+				3D7D9C1723843F8500B90EB9 /* textFieldDesign.swift in Sources */,
 				3DF516AE2375736800A0ACF7 /* Messag.swift in Sources */,
 				3DF516B22376BC4900A0ACF7 /* userActivity.swift in Sources */,
 				3D5F4C9C236889A2001948B2 /* ReceiverTableViewCell.swift in Sources */,
@@ -467,6 +498,7 @@
 				3D5F4C97236844C7001948B2 /* MessagesTableViewController.swift in Sources */,
 				3D5F4CA423696A78001948B2 /* ChatBubble.swift in Sources */,
 				3D5F4CAF236AC372001948B2 /* GeneralFunction.swift in Sources */,
+				3D0D24EF23829EF000AD312F /* TestingTableViewController.swift in Sources */,
 				3DC26BFA236C1D48001CA6B8 /* Validation.swift in Sources */,
 				3D5F4CAC2369B3F8001948B2 /* imageTableViewCell.swift in Sources */,
 			);

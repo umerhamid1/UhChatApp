@@ -33,26 +33,29 @@ class ViewController: UIViewController , AVAudioPlayerDelegate  {
        }
     var i = 0
     @IBAction func audioDidPress(_ sender: Any) {
-        
-        
+      
+        print("tound start \(i)")
         if i == 0 {
             i = 1
             recordButton.setImage(UIImage(named: "playCell.png"), for: .normal)
             //recordButton.image("play.circle")
-            //AudioServicesPlayAlertSound(1519)
+            //AudioSe	rvicesPlayAlertSound(1519)
              self.recordAudio()
             print("audio is startding")
-            
-            
+
+
         }else{
             i = 0
             recordButton.setImage(UIImage(named: "pauseCell.png"), for: .normal)
             holdRelease()
             print("audio is stop")
-            
+
         }
          
      }
+    
+    
+  
     
     
     @IBAction func test(_ sender: Any) {

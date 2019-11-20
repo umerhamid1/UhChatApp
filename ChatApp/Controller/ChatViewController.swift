@@ -13,7 +13,8 @@ import YPImagePicker
 import AVFoundation
 import Foundation
 import AudioToolbox
-
+import GrowingTextView
+import IQKeyboardManagerSwift
 
 class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate
 {
@@ -66,15 +67,17 @@ class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDat
 
     //@IBOutlet var heightConstraint: NSLayoutConstraint!
     //@IBOutlet var sendButton: UIButton!
-    //@IBOutlet var messageTextfield: UITextField!
+    
+    @IBOutlet var messageTextfield: UITextField!
     //@IBOutlet var messageTableView: UITableView!
   //  @IBOutlet weak var navBar: UINavigationItem!
     
     
     
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var messageTableView: UITableView!
     
-    @IBOutlet weak var messageTextfield: UITextView!
+   // @IBOutlet weak var messageTextfield: GrowingTextView!
     @IBOutlet weak var sendButton: UIButton!
    // @IBOutlet weak var navBar: UINavigationItem!
     
@@ -85,8 +88,25 @@ class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        bottomConstraint = NSLayoutConstraint(item: containerView!, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0)
+        view.addConstraint(bottomConstraint!)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        
+        //messageTextfield.delega
+//        messageTextfield.maxLength = 140
+//        messageTextfield.trimWhiteSpaceWhenEndEditing = false
+//        messageTextfield.placeholder = "Type Message..."
+//        messageTextfield.placeholderColor = UIColor(white: 0.8, alpha: 1.0)
+//        messageTextfield.minHeight = 25.0
+//        messageTextfield.maxHeight = 70.0
+//        //messageTextfield.backgroundColor = UIColor.whiteColor()
+//        messageTextfield.layer.cornerRadius = 4.0
+        automaticallyAdjustsScrollViewInsets = false
+       // recordButton.setImage(UIImage(named: "pause.circle"), for: .normal)
        
-       
+        
 
 //        print(receiverName)
 //        print(receiverImageURL)
@@ -110,6 +130,11 @@ class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDat
         
         messageTableView.register(UINib(nibName: "imageTableViewCell", bundle: nil) , forCellReuseIdentifier: "senderImageCell")
           messageTableView.register(UINib(nibName: "receiverImageTableViewCell", bundle: nil) , forCellReuseIdentifier: "receiverSendingImageCell")
+        
+        messageTableView.register(UINib(nibName: "AudioTableViewCell", bundle: nil) , forCellReuseIdentifier: "audioCell")
+        
+        messageTableView.register(UINib(nibName: "audioSendersTableViewCell", bundle: nil) , forCellReuseIdentifier: "audioSenderCell")
+        
         
         messageTableView.delegate = self
         messageTableView.dataSource = self
@@ -136,14 +161,39 @@ class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDat
         self.setupAudioSession()
        // self.recordButton.addTarget(self, action: #selector(holdRelease), for: UIControl.Event.touchUpInside);
     }
+    
+    @objc func handleKeyboardNotification(notification: NSNotification){
+        if let userInfo = notification.userInfo{
+            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
+            let isKeyboardShowing = notification.name == UIResponder.keyboardWillShowNotification
+            if UIDevice().userInterfaceIdiom == .phone {
+                switch UIScreen.main.nativeBounds.height {
+                case 2436, 2688, 1792:
+                    bottomConstraint?.constant = isKeyboardShowing ? -keyboardFrame.height + self.view.safeAreaInsets.bottom : 0
+                default:
+                    bottomConstraint?.constant = isKeyboardShowing ? -keyboardFrame.height : 0
+                }
+            }
+            UIView.animate(withDuration: 0, delay: 0, options: .curveEaseInOut, animations: {
+                self.view.layoutIfNeeded()
+            }, completion: {(completed) in
+                if isKeyboardShowing{
+                    if self.messageArray.count != 0 {
+                        let indexPath = IndexPath(item: self.messageArray.count - 1, section: 0)
+                        self.messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+                    }
+                }
+            })
+        }
+    }
     var i1 = 0
     @IBAction func audioDidPress(_ sender: Any) {
         
         
         if i1 == 0 {
             i1 = 1
-            recordButton.setImage(UIImage(named: "playCell.png"), for: .normal)
-                  
+            
+            recordButton.setImage(UIImage(named: "muteMice.png"), for: .normal)
             
             print("holding ")
             AudioServicesPlayAlertSound(1519)
@@ -153,12 +203,21 @@ class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDat
                   
               }else{
                   i1 = 0
-                  recordButton.setImage(UIImage(named: "pauseCell.png"), for: .normal)
+            recordButton.setImage(UIImage(named: "mic111.png"), for: .normal)
+                 
                   
                   //print("audio is stop")
             self.holdRelease()
                   
               }
+       }
+    
+    override func viewWillAppear(_ animated: Bool) {
+          
+       // IQKeyboardManager.shared.isenable = false
+        //IQKeyboardManager.shared.isEnabled = false
+        IQKeyboardManager.shared.enable = false
+        IQKeyboardManager.shared.enableAutoToolbar = false
        }
     
     
@@ -175,15 +234,41 @@ class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDat
             print(audioPlayer.duration)
             
             if Int(audioPlayer.duration) > 1{
-//                self.fs.sendAudio(sid: self.senderUserID, rid: self.receiverUserID, _message: url!.absoluteString,  duration:"\(m):\(s)") { (resonse) in
-//                    if resonse == "ok"
-//                    {
-//                        print("response completed \(resonse)")
-//                    }else{
-//                        print("error during uuploading audio")
-//                    }
-//                    
-//                }
+                self.fs.sendAudio(sid: self.senderUserID, rid: self.receiverUserID, _message: url!.absoluteString,  duration:"\(m):\(s)") { (resonse) in
+                    if resonse == "ok"
+                    {
+                        print("response completed \(resonse)")
+                        
+                        
+                                   let data = [
+                                   
+                                       "ConversationID" : self.conversationID,
+                                       "LastMessage" : "audio",
+                                       "LastMessageTime" : Date(),
+                                       "ConversationName" : "",
+                                       "ConversationCreatedDate" : Date(),
+                                       "User1": self.senderUserID,
+                                       "user1Name/sender" : self.senderUserName,
+                                       "IsOnline/sender" : true ,
+                                       "imageURL/sender" : self.senderImageURL,
+                                       "User2": self.receiverUserID,
+                                       "IsOnline/Receiver" : self.receiverOnlineStatus,
+                                       "user2Name/receiver" : self.receiverName,
+                                       "imageURL/receiver" : self.receiverImageURL,
+                                       "CollectionID" : self.friendID
+                                       
+                                       ] as [String : Any]
+                                   
+                                   
+                        self.fs.updateData(collection: "Friends", data: data, documentID: self.friendID) { (response) in
+                                       print("here is response : \(response)")
+                                       print("here is friendID :\(self.friendID)")
+                                   }
+                    }else{
+                        print("error during uuploading audio")
+                    }
+                    
+                }
 //                self.userActivityObj.sendAudio(sid: self.uid!, rid: self.recvId!, sName: self.uName!, rName: self.recvName, _message: url!.absoluteString, duration:"\(m):\(s)", completion: {(error,msg) in
 //                    if let err = error{
 //                        let alert = UIAlertController(title: "Alert", message: err, preferredStyle: UIAlertController.Style.alert)
@@ -226,6 +311,31 @@ class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDat
                                            // self.realTimeUpdate()
                                             self.updateCoversationID()
                                             
+                                            
+                                                       let data = [
+                                                       
+                                                           "ConversationID" : self.conversationID,
+                                                           "LastMessage" : "picture",
+                                                           "LastMessageTime" : Date(),
+                                                           "ConversationName" : "",
+                                                           "ConversationCreatedDate" : Date(),
+                                                           "User1": self.senderUserID,
+                                                           "user1Name/sender" : self.senderUserName,
+                                                           "IsOnline/sender" : true ,
+                                                           "imageURL/sender" : self.senderImageURL,
+                                                           "User2": self.receiverUserID,
+                                                           "IsOnline/Receiver" : self.receiverOnlineStatus,
+                                                           "user2Name/receiver" : self.receiverName,
+                                                           "imageURL/receiver" : self.receiverImageURL,
+                                                           "CollectionID" : self.friendID
+                                                           
+                                                           ] as [String : Any]
+                                                       
+                                                       
+                                            self.fs.updateData(collection: "Friends", data: data, documentID: self.friendID) { (response) in
+                                                           print("here is response : \(response)")
+                                                           print("here is friendID :\(self.friendID)")
+                                                       }
                                             
                                         }else{
                                             print("error during uploating picture")
@@ -357,7 +467,8 @@ class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDat
                     "IsOnline/Receiver" : receiverOnlineStatus,
                     "user2Name/receiver" : self.receiverName,
                     "imageURL/receiver" : self.receiverImageURL,
-                    "CollectionID" : ""
+                    "CollectionID" : "",
+                    "duration" : ""
                     
 //                    "ConversationID" : self.conversationID,
 //                    "LastMessage" : msg,
@@ -419,7 +530,8 @@ class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDat
                             "MsgType" : "text",
                             "Uid" : self.senderUserID,
                             "Date" : Date(),
-                            "msgBody" : msg
+                            "msgBody" : msg,
+                            "duration" : ""
                                            //  "Sender": loginEmail ,
                                             // "Receiver": self.emailReceiver ,
 
@@ -461,7 +573,8 @@ class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDat
                                             "MsgType" : "text",
                                             "Uid" : self.senderUserID,
                                             "Date" : Date(),
-                                            "msgBody" : msg
+                                            "msgBody" : msg ,
+                                            "duration" : ""
 
 
                                  ]) { err in
@@ -517,7 +630,7 @@ class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDat
            
           
 
-                  // self.messageTextfield.isEnabled = true
+                   self.messageTextfield.isEnabled = true
                    self.sendButton.isEnabled = true
                    self.messageTextfield.text = ""
 
@@ -574,6 +687,7 @@ class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDat
                           print("Error fetching snapshots: \(error!)")
                           return
                       }
+                   // self.messageArray.removeAll()
                       snapshot.documentChanges.forEach { diff in
                           if (diff.type == .added) {
                               print("New city: \(diff.document.data())")
@@ -586,14 +700,16 @@ class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDat
                             m.uid = data["Uid"] as! String
                             m.date = data["Date"] as? Date
                             m.messageBody = data["msgBody"] as! String
+                            m.duration  = data["duration"] as? String ?? "none"
                            // m.receiver = data["Receiver"] as! String
                            // m.sender = data["Sender"] as! String
                             self.messageArray.append(m)
-                            print("here is forach realtime update")
-                            print("here is array\(self.messageArray)")
-                              
+                            //print("here is forach realtime update")
+                           // print("here is array\(self.messageArray)")
+                            print("here is Message : \(data["msgBody"]as! String)")
+                            //self.messageTableView.reloadData()
                               self.messageTableView.beginUpdates()
-                              self.messageTableView.insertRows(at: [IndexPath(row: self.messageArray.count-1, section: 0)], with: .automatic)
+                            self.messageTableView.insertRows(at: [IndexPath(row: self.messageArray.count - 1, section: 0)], with: .automatic)
                               self.messageTableView.endUpdates()
                               self.scrollToBottom()
                           }
@@ -652,7 +768,29 @@ class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDat
                                // cell.avatarImageView.backgroundColor = UIColor.red
                            cell.senderUsername.text = self.senderUserName
                            return cell
-                       }
+            }else if messageArray[indexPath.row].msgType == "audio"
+            {
+                //audioCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "audioSenderCell", for: indexPath) as! audioSendersTableViewCell
+               // cell.playAudio()
+                
+                cell.tag1 = indexPath.row
+                
+                 cell.url = messageArray[indexPath.row].messageBody
+                let url  = NSURL(string: senderImageURL)
+                
+                 cell.avatarImage.sd_setImage(with: url as URL?, placeholderImage: UIImage(named: "avatar.png"))
+                cell.playButtonOutLet.tag = indexPath.row
+                cell.senderName.text = senderUserName
+                cell.status.text = messageArray[indexPath.row].duration
+    
+                cell.playButtonOutLet.addTarget(self, action: #selector(pressButton(_:)), for: .touchUpInside)
+               // let data = staticLinker.getPastStatus(date: "\(self.messageArray[indexPath.row].date)")
+               // cell.date.text = data.1
+                //cell.status.text = staticLinker.getPastTime(for: data.0)
+                
+                return cell
+            }
             
             
            // print("i == 0 ")
@@ -671,7 +809,30 @@ class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDat
                 cell.senderUsername.text = self.receiverName
                 cell.selectionStyle = .none
                 return cell
-            } else if messageArray[indexPath.row].msgType == "image" {
+            }else if messageArray[indexPath.row].msgType == "audio"
+                    {
+                        //audioCell
+                        let cell = tableView.dequeueReusableCell(withIdentifier: "audioCell", for: indexPath) as! AudioTableViewCell
+                       // cell.playAudio()
+                        
+                       // cell.tag1 = indexPath.row
+                        
+                       //  cell.url = messageArray[indexPath.row].messageBody
+                        let url  = NSURL(string: senderImageURL)
+                        
+                         cell.avatarImage.sd_setImage(with: url as URL?, placeholderImage: UIImage(named: "avatar.png"))
+                        cell.playButtonOutLet.tag = indexPath.row
+                        cell.senderName.text = senderUserName
+                        cell.status.text = messageArray[indexPath.row].duration
+            
+                        cell.playButtonOutLet.addTarget(self, action: #selector(pressButton(_:)), for: .touchUpInside)
+                       // let data = staticLinker.getPastStatus(date: "\(self.messageArray[indexPath.row].date)")
+                       // cell.date.text = data.1
+                        //cell.status.text = staticLinker.getPastTime(for: data.0)
+                        
+                        return cell
+                    }
+            else if messageArray[indexPath.row].msgType == "image" {
                 
                 let cell = tableView.dequeueReusableCell(withIdentifier: "receiverSendingImageCell", for: indexPath) as! receiverImageTableViewCell
                             let urlImage  = NSURL(string: messageArray[indexPath.row].messageBody)
@@ -689,17 +850,55 @@ class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDat
             }
             else {
                 // here is audio cell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "audioSenderCell", for: indexPath) as! audioSendersTableViewCell
+                cell.url = messageArray[indexPath.row].messageBody
+                       cell.senderName.text = "testing"
+                       let url  = NSURL(string: senderImageURL)
+                            
+                       cell.avatarImage.sd_setImage(with: url as URL?, placeholderImage: UIImage(named: "avatar.png"))
+                       //cell.avatarImage.sd_setImage(with: <#T##URL?#>, completed: <#T##SDExternalCompletionBlock?##SDExternalCompletionBlock?##(UIImage?, Error?, SDImageCacheType, URL?) -> Void#>)
+                       
+                       
+                        return cell
             }
             
         }
         
         
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "senderMessageCell", for: indexPath) as! senderTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "audioSenderCell", for: indexPath) as! audioSendersTableViewCell
+
+        cell.senderName.text = "testing"
+        let url  = NSURL(string: senderImageURL)
+
+        cell.avatarImage.sd_setImage(with: url as URL?, placeholderImage: UIImage(named: "avatar.png"))
+        //cell.avatarImage.sd_setImage(with: <#T##URL?#>, completed: <#T##SDExternalCompletionBlock?##SDExternalCompletionBlock?##(UIImage?, Error?, SDImageCacheType, URL?) -> Void#>)
+
+
          return cell
         
     }
 
+    
+    @objc func pressButton(_ button: UIButton) {
+        if self.audioButton != button && self.audioButton != nil{
+            self.audioPlayer = nil
+            self.audioButton.setImage(self.play, for: .normal)
+            self.audioButton = button
+        }else{
+            self.audioButton = button
+        }
+        if self.audioButton.currentImage == self.play{
+            self.audioButton.setImage(self.pause, for: .normal)
+            self.playSound(soundUrl: self.messageArray[button.tag].messageBody)
+            audioPlayer.play()
+        }else{
+            self.audioButton.setImage(self.play, for: .normal)
+            audioPlayer.pause()
+        }
+    }
+    
+    
 
     /*
     // MARK: - Navigation
