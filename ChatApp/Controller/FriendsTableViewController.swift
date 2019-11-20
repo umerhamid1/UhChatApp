@@ -58,7 +58,7 @@ class FriendsTableViewController: UITableViewController {
         
    
         friendListTableView1.separatorStyle = .none
-        
+        self.navigationItem.title = "Friends"
         
        // var ref: DocumentReference?
         print("\(emailG)")
@@ -67,6 +67,7 @@ class FriendsTableViewController: UITableViewController {
         realTimeFriend {
             self.friendListTableView1.reloadData()
             self.view.hideToastActivity()
+            
         }
         print(" here is friend list id after login: \(arrFriendIDs)")
 
@@ -243,6 +244,7 @@ class FriendsTableViewController: UITableViewController {
                       chatVC.senderImageURL = self.senderImageURL
                       chatVC.senderUserName = self.senderUserName
                       chatVC.receiverOnlineStatus = self.receiverOnlineStatus
+            chatVC.firstTimeLoad = true
         }
         
         print("here message details conversation id : \(conversationID)")

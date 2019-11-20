@@ -31,7 +31,7 @@ class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDat
     var senderUserName = ""
     var senderImageURL = ""
     var receiverOnlineStatus = false
-    
+    var firstTimeLoad = false
     
     // here is audio session
     
@@ -88,11 +88,19 @@ class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
 
+      
+       
+       
+        self.navigationItem.title = "\(self.receiverName)"
+        
+        messageTextfield.layer.cornerRadius = 15.0
         bottomConstraint = NSLayoutConstraint(item: containerView!, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0)
         view.addConstraint(bottomConstraint!)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillHideNotification, object: nil)
         
+        
+       
         
         //messageTextfield.delega
 //        messageTextfield.maxLength = 140
@@ -113,16 +121,16 @@ class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDat
 //        print(receiverUserID)
         
         print("here is current user ID \(senderUserID)")
+       
+        
         
         let settings = FirestoreSettings()
 
-            Firestore.firestore().settings = settings
-            // [END setup]
-            db = Firestore.firestore()
-        
-     
-         
-        
+                             Firestore.firestore().settings = settings
+                             // [END setup]
+                             db = Firestore.firestore()
+                         
+       
        // navBar.title = receiverName
         messageTableView.register(UINib(nibName: "ReceiverTableViewCell", bundle: nil) , forCellReuseIdentifier: "receiverMessageCell")
         
@@ -160,6 +168,9 @@ class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDat
         //self.configureUI()
         self.setupAudioSession()
        // self.recordButton.addTarget(self, action: #selector(holdRelease), for: UIControl.Event.touchUpInside);
+        
+        //
+        recordButton.setImage(UIImage(named: "mic111.png"), for: .normal)
     }
     
     @objc func handleKeyboardNotification(notification: NSNotification){
@@ -187,29 +198,52 @@ class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDat
         }
     }
     var i1 = 0
+    var micImage = UIImage(named: "mic111.png")
+    
+    var muteMicImage = UIImage(named: "muteMice.png")
     @IBAction func audioDidPress(_ sender: Any) {
         
-        
-        if i1 == 0 {
-            i1 = 1
+        if recordButton.currentImage == micImage {
             
             recordButton.setImage(UIImage(named: "muteMice.png"), for: .normal)
             
             print("holding ")
             AudioServicesPlayAlertSound(1519)
-            self.recordAudio()
-                  print("audio is startding")
+            
+            if i1 == 0 {
+                i1 = 1
+                self.recordAudio()
+                self.recordAudio()
+            }else if i1 == 1{
+                self.recordAudio()
+            }
+            print("audio is startding")
                   
-                  
-              }else{
-                  i1 = 0
+        }else if recordButton.currentImage == muteMicImage{
             recordButton.setImage(UIImage(named: "mic111.png"), for: .normal)
-                 
-                  
-                  //print("audio is stop")
             self.holdRelease()
-                  
-              }
+            
+        }
+//        if i1 == 0 {
+//            i1 = 1
+//
+//            recordButton.setImage(UIImage(named: "muteMice.png"), for: .normal)
+//
+//            print("holding ")
+//            AudioServicesPlayAlertSound(1519)
+//            self.recordAudio()
+//                  print("audio is startding")
+//
+//
+//              }else{
+//                  i1 = 0
+//            recordButton.setImage(UIImage(named: "mic111.png"), for: .normal)
+//
+//
+//                  //print("audio is stop")
+//            self.holdRelease()
+//
+//              }
        }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -224,7 +258,7 @@ class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDat
     func holdRelease(){
         
         print("releaser")
-       // AudioServicesPlayAlertSound(1519)
+        AudioServicesPlayAlertSound(1519)
         self.audioRecorder.stop()
         do {
             let url = URL(string: self.getDirectory().appendingPathComponent("myRecording.m4a").absoluteString)
@@ -667,60 +701,143 @@ class ChatViewController: UIViewController , UITableViewDelegate, UITableViewDat
     
     func getMessages(){
     
-        getFrieldID { (friendID) in
-            if friendID == "" {
-                print("friend id is nil inside in fucntion")
-            }else{
-                 self.realTimeUpdate()
-                
-            }
-                        
-         }
+//        getFrieldID { (friendID) in
+//            if friendID == "" {
+//                print("friend id is nil inside in fucntion")
+//            }else{
+//                 self.realTimeUpdate()
+//
+//            }
+//
+//         }
+        
+        
+        
+        let settings = FirestoreSettings()
+
+                             Firestore.firestore().settings = settings
+                             // [END setup]
+                             db = Firestore.firestore()
+                         
+                      
+                   db.collection("Messages").whereField("ConversationID", isEqualTo: conversationID ).order(by: "Date", descending: false)
+                               .addSnapshotListener { querySnapshot, error in
+                                                        guard let snapshot = querySnapshot else {
+                                                            print("Error fetching snapshots: \(error!)")
+                                                            return
+                                                        }
+                                                        snapshot.documentChanges.forEach { diff in
+                                                            if (diff.type == .added) {
+                                                                print("New test city: \(diff.document.data())")
+                                                                print("=============================================================================")
+                                                                
+                                                                 let m = Message()
+                                                                                                        let data = diff.document.data()
+                                                                                                        m.conversationID = data["ConversationID"] as! String
+                                                                                                        m.friendID = data["FriendID"] as! String
+                                                                                                        m.msgType = data["MsgType"] as! String
+                                                                                                        m.uid = data["Uid"] as! String
+                                                                                                        m.date = data["Date"] as? Date
+                                                                                                        m.messageBody = data["msgBody"] as! String
+                                                                                                        m.duration  = data["duration"] as? String ?? "none"
+                                                                                                       // m.receiver = data["Receiver"] as! String
+                                                                                                       // m.sender = data["Sender"] as! String
+                                                                                                        self.messageArray.append(m)
+                                                                
+                                                                                                       // self.messageTableView.reloadData()
+                                                               // UIView.setAnimationsEnabled(false)
+                                                                self.messageTableView.beginUpdates()
+                                                                self.messageTableView.insertRows(at: [IndexPath(row: self.messageArray.count - 1, section: 0)], with: .automatic)
+                                                                    self.messageTableView.endUpdates()
+                                                                     self.scrollToBottom()
+                                                                                                        print("reload again")
+                                                                
+                                                                
+                                                                
+                                                               // self.tableView.reloadSections(NSIndexSet(index: 1) as IndexSet, with: UITableViewRowAnimation.none)
+                                                               // self.tableView.endUpdates()
+                                                                
+                                                            }
+                                                        }
+                                                    }
+
             
     }
     
-    func realTimeUpdate(){
-        
-        db.collection("Messages").whereField("ConversationID", isEqualTo: conversationID).order(by: "Date", descending: false)
-                  .addSnapshotListener { querySnapshot, error in
-                      guard let snapshot = querySnapshot else {
-                          print("Error fetching snapshots: \(error!)")
-                          return
-                      }
-                   // self.messageArray.removeAll()
-                      snapshot.documentChanges.forEach { diff in
-                          if (diff.type == .added) {
-                              print("New city: \(diff.document.data())")
     
-                            let m = Message()
-                            let data = diff.document.data()
-                            m.conversationID = data["ConversationID"] as! String
-                            m.friendID = data["FriendID"] as! String
-                            m.msgType = data["MsgType"] as! String
-                            m.uid = data["Uid"] as! String
-                            m.date = data["Date"] as? Date
-                            m.messageBody = data["msgBody"] as! String
-                            m.duration  = data["duration"] as? String ?? "none"
-                           // m.receiver = data["Receiver"] as! String
-                           // m.sender = data["Sender"] as! String
-                            self.messageArray.append(m)
-                            //print("here is forach realtime update")
-                           // print("here is array\(self.messageArray)")
-                            print("here is Message : \(data["msgBody"]as! String)")
-                            //self.messageTableView.reloadData()
-                              self.messageTableView.beginUpdates()
-                            self.messageTableView.insertRows(at: [IndexPath(row: self.messageArray.count - 1, section: 0)], with: .automatic)
-                              self.messageTableView.endUpdates()
-                              self.scrollToBottom()
-                          }
-                          print("here is out side forach realtime update")
-                         
-                      }
-                  }
-    }
+   // func realTimeUpdate(){
+        
+//        if firstTimeLoad == true {
+//            firstTimeLoad = false
+//              db.collection("Messages").whereField("ConversationID", isEqualTo: conversationID).order(by: "Date", descending: false).getDocuments { querySnapshot, error in
+//                                  guard let snapshot = querySnapshot else {
+//                                      print("Error fetching snapshots: \(error!)")
+//                                      return
+//                                  }
+//
+//                                  snapshot.documentChanges.forEach { diff in
+//                                    //  if (diff.type == .added) {
+//                                          //print("New city: \(diff.document.data())")
+//
+//
+//                                        let m = Message()
+//                                        let data = diff.document.data()
+//                                        m.conversationID = data["ConversationID"] as! String
+//                                        m.friendID = data["FriendID"] as! String
+//                                        m.msgType = data["MsgType"] as! String
+//                                        m.uid = data["Uid"] as! String
+//                                        m.date = data["Date"] as? Date
+//                                        m.messageBody = data["msgBody"] as! String
+//                                        m.duration  = data["duration"] as? String ?? "none"
+//                                       // m.receiver = data["Receiver"] as! String
+//                                       // m.sender = data["Sender"] as! String
+//                                        self.messageArray.append(m)
+//
+//                                        self.messageTableView.reloadData()
+//            //                              self.messageTableView.beginUpdates()
+//            //                            self.messageTableView.insertRows(at: [IndexPath(row: self.messageArray.count - 1, section: 0)], with: .automatic)
+//            //                              self.messageTableView.endUpdates()
+//                                          self.scrollToBottom()
+//                                        print("reload again")
+//                                      }
+//                                     // print("here is out side forach realtime update")
+//
+//                                //  }
+//                              }
+//
+//        }else {
+//
+           
+            
+//            db.collection("Messages").whereField("ConversationID", isEqualTo: conversationID )
+//                           .addSnapshotListener { querySnapshot, error in
+//                               guard let snapshot = querySnapshot else {
+//                                   print("Error fetching snapshots: \(error!)")
+//                                   return
+//                               }
+//                               snapshot.documentChanges.forEach { diff in
+//                                   if (diff.type == .added) {
+//                                       print("New city: \(diff.document.data())")
+//                                   }
+//                                   if (diff.type == .modified) {
+//                                       print("Modified city: \(diff.document.data())")
+//                                   }
+//                                   if (diff.type == .removed) {
+//                                       print("Removed city: \(diff.document.data())")
+//                                   }
+//                               }
+//                           }
+        
+            
+        //}
+       // print("updateddd")
+        //messageArray.removeAll()
+      
+  //  }
     
     func scrollToBottom(){
         DispatchQueue.main.async {
+            //UIView.setAnimationsEnabled(false)
             let indexPath = IndexPath(row: self.messageArray.count-1, section: 0)
             self.messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }

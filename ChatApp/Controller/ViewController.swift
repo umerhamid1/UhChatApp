@@ -23,6 +23,7 @@ class ViewController: UIViewController , AVAudioPlayerDelegate  {
     override func viewDidLoad() {
            super.viewDidLoad()
          
+       
          // self.recordButton.addTarget(self, action: #selector(holdRelease), for: UIControl.Event.touchUpInside);
         
         //recordButton.setImage(UIImage(named: "play.circle")?.withRenderingMode(.alwaysOriginal), for: .normal)
@@ -35,22 +36,23 @@ class ViewController: UIViewController , AVAudioPlayerDelegate  {
     @IBAction func audioDidPress(_ sender: Any) {
       
         print("tound start \(i)")
-        if i == 0 {
+   //     if i == 0 {
             i = 1
             recordButton.setImage(UIImage(named: "playCell.png"), for: .normal)
             //recordButton.image("play.circle")
             //AudioSe	rvicesPlayAlertSound(1519)
              self.recordAudio()
+        self.recordAudio()
             print("audio is startding")
 
 
-        }else{
-            i = 0
-            recordButton.setImage(UIImage(named: "pauseCell.png"), for: .normal)
-            holdRelease()
-            print("audio is stop")
-
-        }
+//        }else{
+//            i = 0
+//            recordButton.setImage(UIImage(named: "pauseCell.png"), for: .normal)
+//            holdRelease()
+//            print("audio is stop")
+//
+//        }
          
      }
     
@@ -63,6 +65,10 @@ class ViewController: UIViewController , AVAudioPlayerDelegate  {
     }
     @IBAction func release(_ sender: Any) {
         
+        i = 0
+                  recordButton.setImage(UIImage(named: "pauseCell.png"), for: .normal)
+                  holdRelease()
+                  print("audio is stop")
         print("button is release")
     }
      func holdRelease(){

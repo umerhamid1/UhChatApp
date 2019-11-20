@@ -135,6 +135,8 @@ class AllUserTableViewController: UITableViewController {
             chatVC.senderImageURL = self.senderImageURL
             chatVC.senderUserName = self.senderUserName
             chatVC.receiverOnlineStatus = self.receiverOnlineStatus
+            chatVC.firstTimeLoad = true
+            
         }
     }
     
