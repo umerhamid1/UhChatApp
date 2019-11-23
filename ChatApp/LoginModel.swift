@@ -9,13 +9,14 @@
 import Foundation
 import UIKit
 import Firebase
+import Toast_Swift
 
-class LoginModel   {
+class LoginModel  {
     
     let v = Validation()
     let g = GeneralFunction()
     
-    func login(email : String , password : String , controller : UIViewController , completion: @escaping (_ responseMsg: String , _ userID : String)-> Void){
+    func login(email : String , password : String , controller : UIViewController, completion: @escaping (_ responseMsg: String , _ userID : String )-> Void){
         
         
        let email =  v.isValidEmailAddress(emailAddressString: email, controller: controller)
@@ -30,9 +31,10 @@ class LoginModel   {
                           
                           if error != nil {
                            
-                          // completion("\(error!.localizedDescription)")
+                           completion("error" , "")
                              // print(error!)
-                            self.g.showMessage(title: "Error", msg: "\(error?.localizedDescription)", on: controller)
+                          
+                            self.g.showMessage(title: "Error", msg: "\(error!.localizedDescription)", on: controller)
                           } else {
                              //completion("login successfull")
                             

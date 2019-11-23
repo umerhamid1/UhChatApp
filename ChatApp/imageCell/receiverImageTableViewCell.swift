@@ -26,9 +26,15 @@ class receiverImageTableViewCell: UITableViewCell {
         let m = GeneralFunction()
         
 
-        receiverSenderImageView.makeRoundCorners(byRadius: 20)
+        avatarImageView.layer.borderWidth = 1
+        avatarImageView.layer.masksToBounds = false
+        avatarImageView.layer.borderColor = UIColor.white.cgColor
+        avatarImageView.layer.cornerRadius = avatarImageView.frame.height/2
+        avatarImageView.clipsToBounds = true
+      receiverSenderImageView.makeRoundCorners(byRadius: 10)
          //m.sendingImage(imageView: receiverSenderImageView)
-         m.profileImage(image: avatarImageView)
+         //m.profileImage(image: avatarImageView)
+        
         // Initialization code
     }
 

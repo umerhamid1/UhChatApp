@@ -9,7 +9,11 @@
 import Foundation
 
 
-class FriendList{
+class FriendList  {
+    
+    
+    
+    
     
     var  ConversationCreatedDate : Date = Date()
     
@@ -25,6 +29,7 @@ class FriendList{
     var imageURLsender =    ""
     var user1Namesender = ""
     var user2Namereceiver = ""
+    
     
 }
 

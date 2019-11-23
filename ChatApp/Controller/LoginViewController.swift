@@ -33,6 +33,8 @@ class LoginViewController: UIViewController {
     }
     
     var arrFriendID = [String]()
+
+   // let test =
     @IBAction func loginButtonPressed(_ sender: Any) {
         
    
@@ -40,9 +42,13 @@ class LoginViewController: UIViewController {
        // self.getFriendsIDs()
         self.view.makeToastActivity(.center)
 
-        l.login(email: emailTextField.text!, password: passwordTextField.text!, controller: self) { (response , userID) in
+        l.login(email: emailTextField.text!, password: passwordTextField.text!, controller: self ) { (response , userID) in
 
-            self.view.hideToastActivity()
+            if response == "error"{
+                self.view.hideToastActivity()
+                return
+            }
+            
             self.currentUserID = userID
             self.performSegue(withIdentifier: "loginToChat", sender: self)
             //self.general.showMessage(title: "Result", msg: response, on: self)
