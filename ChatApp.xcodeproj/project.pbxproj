@@ -12,6 +12,7 @@
 		3D0D24F32382A81400AD312F /* AudioSenderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D0D24F12382A81400AD312F /* AudioSenderTableViewCell.xib */; };
 		3D0D24F92382F95C00AD312F /* audioSendersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0D24F72382F95C00AD312F /* audioSendersTableViewCell.swift */; };
 		3D0D24FA2382F95C00AD312F /* audioSendersTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D0D24F82382F95C00AD312F /* audioSendersTableViewCell.xib */; };
+		3D12FDBA238A92F1003650C1 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D12FDB9238A92F1003650C1 /* WelcomeViewController.swift */; };
 		3D5F4C7B23683BFC001948B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5F4C7A23683BFC001948B2 /* AppDelegate.swift */; };
 		3D5F4C7D23683BFC001948B2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5F4C7C23683BFC001948B2 /* SceneDelegate.swift */; };
 		3D5F4C7F23683BFC001948B2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5F4C7E23683BFC001948B2 /* ViewController.swift */; };
@@ -67,6 +68,7 @@
 		3D0D24F12382A81400AD312F /* AudioSenderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioSenderTableViewCell.xib; sourceTree = "<group>"; };
 		3D0D24F72382F95C00AD312F /* audioSendersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = audioSendersTableViewCell.swift; sourceTree = "<group>"; };
 		3D0D24F82382F95C00AD312F /* audioSendersTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = audioSendersTableViewCell.xib; sourceTree = "<group>"; };
+		3D12FDB9238A92F1003650C1 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		3D5F4C7723683BFC001948B2 /* ChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D5F4C7A23683BFC001948B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3D5F4C7C23683BFC001948B2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				3D8A959C2372D1F2002D63BF /* AllUserTableViewController.swift */,
 				3D8A959E23730715002D63BF /* 123.jpg */,
 				3D0D24EE23829EF000AD312F /* TestingTableViewController.swift */,
+				3D12FDB9238A92F1003650C1 /* WelcomeViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -473,6 +476,7 @@
 				3D5F4C9423684292001948B2 /* senderTableViewCell.swift in Sources */,
 				3DC26BFE236D8B81001CA6B8 /* FireStoreQueries.swift in Sources */,
 				3D5F4C7F23683BFC001948B2 /* ViewController.swift in Sources */,
+				3D12FDBA238A92F1003650C1 /* WelcomeViewController.swift in Sources */,
 				3D7CC407236AE0A400B7BF0E /* FriendsTableViewCell.swift in Sources */,
 				3DC26BF8236C1C52001CA6B8 /* RegistrationViewController.swift in Sources */,
 				3DF516B02376B5F900A0ACF7 /* StaticLinker.swift in Sources */,

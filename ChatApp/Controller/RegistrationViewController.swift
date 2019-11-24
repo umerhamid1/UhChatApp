@@ -25,6 +25,7 @@ class RegistrationViewController: UIViewController ,  UIImagePickerControllerDel
     
     
     let general = GeneralFunction()
+    var currentUserID = ""
     
     let image = UIImagePickerController()
     override func viewDidLoad() {
@@ -47,18 +48,30 @@ class RegistrationViewController: UIViewController ,  UIImagePickerControllerDel
         self.view.makeToastActivity(.center)
         
         registeration.completeRegistration(email: emailTextField.text!, password: passwordTextField.text!, phone: mobileTextField.text!, name: nameTextField.text!, controller: self, collection: "User", image: profileImage){ (responseMsg) in
-            self.view.hideToastActivity()
-            self.general.showMessage(title: "Result", msg: responseMsg, on: self)
+            if responseMsg != "registration is completed"{
+                self.view.hideToastActivity()
+                
+                self.general.showMessage(title: "Result", msg: responseMsg, on: self)
+            }else{
+                self.view.hideToastActivity()
+                self.performSegue(withIdentifier: "goToFriendList", sender: self)
+                self.currentUserID = Auth.auth().currentUser!.uid
+                emailG = self.emailTextField.text!
+            }
+            
         }
 
     }
     
+    
+    
 
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goToLogin"{
+        if segue.identifier == "goToFriendList"{
 
-            
+            let friendVC = segue.destination as! FriendsTableViewController
+            friendVC.currentUserID = self.currentUserID
             
         }
     }

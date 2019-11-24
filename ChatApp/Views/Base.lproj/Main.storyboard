@@ -153,6 +153,9 @@
                         <viewLayoutGuide key="safeArea" id="Ewn-zA-5JD"/>
                     </view>
                     <navigationItem key="navigationItem" title="Welcome" id="HYD-FP-5bQ"/>
+                    <connections>
+                        <segue destination="Ahl-bD-0cd" kind="show" identifier="goWelcomeToFriendList" id="nuR-A8-hOD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wzy-6A-GPz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -248,7 +251,7 @@
                         <outlet property="nameTextField" destination="ons-P5-MaW" id="Us3-ZD-Dz9"/>
                         <outlet property="passwordTextField" destination="PIS-Jn-7NT" id="SGq-CD-4kC"/>
                         <outlet property="profileImage" destination="QFc-cs-3cg" id="Wme-hS-S35"/>
-                        <segue destination="Ahl-bD-0cd" kind="show" identifier="registrationToChat" id="TXt-cV-dJ3"/>
+                        <segue destination="Ahl-bD-0cd" kind="show" identifier="goToFriendList" id="TXt-cV-dJ3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="adW-UQ-CIB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -764,6 +767,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Roq-Lo-MwB"/>
-        <segue reference="Lpg-zp-9ys"/>
+        <segue reference="nuR-A8-hOD"/>
     </inferredMetricsTieBreakers>
 </document>
