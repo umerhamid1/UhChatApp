@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import Toast_Swift
+import SwiftMoment
 
 class FriendsTableViewController: UITableViewController {
     
@@ -329,9 +330,12 @@ class FriendsTableViewController: UITableViewController {
         }else{
             cell.senderUsername.text = friends?[indexPath.row].user2Namereceiver ?? "none"
         }
+        let yesterday = moment("2019-11-24")
+        print("yesterday details : \(yesterday)")
+        cell.lastMessageTime.text = friends?[indexPath.row].LastMessageTime ?? "none"
+        //var i = staticLinker.getPastTime(for: staticLinker.getPastStatus(date: "\(self.friends?[indexPath.row].LastMessageTime)!").0)
         
-        cell.lastMessageTime.text = friends?[indexPath.row].LastMessageTime ?? "none"//staticLinker.getPastTime(for: staticLinker.getPastStatus(date: self.friends?[indexPath.row].LastMessageTime ?? "nil").0)
-        
+       // print(i)
         // Configure the cell...
         
         return cell

@@ -24,5 +24,6 @@ target 'ChatApp' do
   pod 'MPAudioRecorder'
   
   pod 'SwiftySound'
+  pod 'SwiftMoment'
    
 end

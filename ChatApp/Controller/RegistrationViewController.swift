@@ -48,11 +48,16 @@ class RegistrationViewController: UIViewController ,  UIImagePickerControllerDel
         self.view.makeToastActivity(.center)
         
         registeration.completeRegistration(email: emailTextField.text!, password: passwordTextField.text!, phone: mobileTextField.text!, name: nameTextField.text!, controller: self, collection: "User", image: profileImage){ (responseMsg) in
-            if responseMsg != "registration is completed"{
+            
+            //print("response Message : \(responseMsg)")
+            
+            
+            if responseMsg != "sucessFull"{
                 self.view.hideToastActivity()
-                
+
                 self.general.showMessage(title: "Result", msg: responseMsg, on: self)
             }else{
+                self.general.showMessage(title: "Result", msg: responseMsg, on: self)
                 self.view.hideToastActivity()
                 self.performSegue(withIdentifier: "goToFriendList", sender: self)
                 self.currentUserID = Auth.auth().currentUser!.uid

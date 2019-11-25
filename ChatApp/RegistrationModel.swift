@@ -49,10 +49,14 @@ class RegistrationModel {
                                "ConversationID" : ["","",""]
             
                         ] as [String : Any]
-            
+            var msg = ""
             registerUser(email: email, password: password, collection: collection, data: data, image: image) { (responseMsg) in
+                msg = responseMsg
                 completion(responseMsg)
+                print("reponse messge of register user : \(msg)")
             }
+            
+           // completion(msg)
         }
         
         
@@ -79,10 +83,11 @@ class RegistrationModel {
                   
                                               
                     self.query.insertData(collection: collection, data: data , collectionID: userID!) { (responseMsg, documentID) in
-                        //completion(responseMsg)
+                        completion(responseMsg)
                         
                         self.query.imageUpload(image: image , imageID:  documentID , data : data , collection: collection) { (response) in
                             
+                            print("image upload message \(responseMsg)")
                             completion(response)
 
                         }
